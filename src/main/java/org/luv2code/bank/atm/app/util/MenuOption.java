@@ -1,6 +1,7 @@
 package org.luv2code.bank.atm.app.util;
 
 import org.luv2code.bank.atm.app.model.Login;
+import org.luv2code.bank.atm.app.model.Registration;
 import org.luv2code.bank.atm.app.service.AuthService;
 
 import java.util.Scanner;
@@ -35,7 +36,17 @@ public class MenuOption {
                     }
                     break;
                 case 2:
-                    System.out.println("Registration process would begin now");
+                    System.out.println("Please provide the account holder name:");
+                    String name = sc.next();
+                    System.out.println("Please provide the account holder age:");
+                    int age = sc.nextInt();
+                    System.out.println("Please provide the account id:");
+                    String account = sc.next();
+                    System.out.println("Please provide the account pin:");
+                    int accountPin = sc.nextInt();
+                    System.out.println("Please provide the account pin again to confirm:");
+                    int accountPinConfirm = sc.nextInt();
+                    authService.registerUser(new Registration(name,age,account,accountPin,accountPinConfirm));
                     break;
                 default:
                     System.out.println("Please choose a valid option.");
