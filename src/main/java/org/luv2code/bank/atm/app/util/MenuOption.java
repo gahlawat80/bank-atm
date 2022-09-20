@@ -32,7 +32,10 @@ public class MenuOption {
                     if (!isValidUser) {
                         System.out.println("Account ID or Pin is not valid. Please provide valid credentials.");
                     } else {
-                        System.out.println("Login is successful!");
+                        showSubMenu();
+                        System.out.println("Please make your transaction choice: ");
+                        int txChoice = sc.nextInt();
+                        System.out.println("You selection choice :"+txChoice);
                     }
                     break;
                 case 2:
@@ -53,5 +56,14 @@ public class MenuOption {
                     break;
             }
         }while (!isExit);
+    }
+
+    private void showSubMenu(){
+        System.out.println("1-View Balance\n" +
+                "2-Deposit amount\n" +
+                "3-Withdraw amount\n" +
+                "4-View Mini-statement\n" +
+                "5-View Detailed-statement \n" +
+                "6-Exit application");
     }
 }
