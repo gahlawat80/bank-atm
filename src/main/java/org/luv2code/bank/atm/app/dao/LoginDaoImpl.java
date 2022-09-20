@@ -1,6 +1,7 @@
 package org.luv2code.bank.atm.app.dao;
 
 import org.luv2code.bank.atm.app.model.Login;
+import org.luv2code.bank.atm.app.model.Registration;
 
 import java.sql.*;
 
@@ -37,5 +38,37 @@ public class LoginDaoImpl implements LoginDao{
             }
         }
         return false;
+    }
+
+    @Override
+    public String saveUser(Registration user) throws Exception {
+        Connection con = createDBConnection();
+        boolean isUserCreated = false;
+        boolean isLoginCreated = false;
+
+        boolean isUserPresent = verifyLoginDetails(new Login(user.getAccountId(),user.getPin()));
+        if(!isUserPresent){
+            String registerQuery = "INSERT INTO tbl_registration(name,age,account_id) VALUES(?,?,?)";
+            PreparedStatement ps = con.prepareStatement(registerQuery);
+            ps.setString(1,user.getName());
+            ps.setInt(2,user.getAge());
+            ps.setString(3,user.getAccountId());
+            int result =ps.executeUpdate();
+            if(result==1){
+                isUserCreated = true;
+            }
+            String loginQuery = "INSERT INTO tbl_accounts(account_id,pin) VALUES(?,?)";
+            ps = con.prepareStatement(loginQuery);
+            ps.setString(1,user.getAccountId());
+            ps.setInt(2,user.getPin());
+            result = ps.executeUpdate();
+            if(result==1){
+                isLoginCreated=true;
+            }
+        }
+        if(isLoginCreated && isUserCreated){
+            return "User is successfully registered with account- "+user.getAccountId();
+        }
+        return "User is NOT registered with account- "+user.getAccountId();
     }
 }
