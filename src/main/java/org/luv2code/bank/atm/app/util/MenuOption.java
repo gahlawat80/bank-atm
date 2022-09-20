@@ -30,6 +30,8 @@ public class MenuOption {
                     boolean isValidUser = authService.isValidAccount(login);
                     if (!isValidUser) {
                         System.out.println("Account ID or Pin is not valid. Please provide valid credentials.");
+                    } else {
+                        System.out.println("Login is successful!");
                     }
                     break;
                 case 2:
