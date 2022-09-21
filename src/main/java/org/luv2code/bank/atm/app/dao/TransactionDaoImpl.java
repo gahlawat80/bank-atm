@@ -41,4 +41,22 @@ public class TransactionDaoImpl implements TransactionDao {
         }
         return false;
     }
+
+    @Override
+    public double withdrawTransaction(Transaction tx, String accountId) throws Exception {
+        con = createConnection();
+        String sql = "INSERT INTO tbl_transactions(transaction_id,transaction_type,transaction_amount,current_balance,transaction_date,account_id) VALUES(?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1,tx.getTransactionId());
+        ps.setString(2,tx.getTransactionType());
+        ps.setDouble(3,tx.getTransactionAmount());
+        ps.setDouble(4,tx.getCurrentBalance());
+        ps.setDate(5,new Date(tx.getTransactionDate().getTime()));
+        ps.setString(6,accountId);
+        int result = ps.executeUpdate();
+        if(result==1){
+            return tx.getTransactionAmount();
+        }
+        return 0;
+    }
 }

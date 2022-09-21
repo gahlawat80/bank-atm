@@ -43,10 +43,20 @@ public class MenuOption {
                                 case 2:
                                     System.out.println("Enter the amount to deposit:");
                                     double amount = sc.nextDouble();
-                                    txService.depositAmount(amount,accountId);
+                                    if(amount>=0){
+                                        txService.depositAmount(amount,accountId);
+                                    } else {
+                                        System.out.println("-ve amount is not allowed");
+                                    }
                                     break;
                                 case 3:
-                                    System.out.println("Withdraw amount");
+                                    System.out.println("Enter amount you like to withdraw:");
+                                    double withdraw = sc.nextDouble();
+                                    if(withdraw>=0){
+                                        txService.withdrawMoney(withdraw,accountId);
+                                    } else {
+                                        System.out.println("-ve amount is not allowed");
+                                    }
                                     break;
                                 case 4:
                                     System.out.println("View mini-statement");

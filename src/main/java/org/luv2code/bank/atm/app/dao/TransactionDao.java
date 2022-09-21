@@ -9,4 +9,6 @@ public interface TransactionDao {
     double viewCurrentBalance(String accountId) throws Exception;
 
     boolean depositTransaction(Transaction tx, String accountId) throws Exception;
+
+    double withdrawTransaction(Transaction tx, String accountId) throws Exception;
 }
