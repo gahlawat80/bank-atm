@@ -3,16 +3,16 @@ package org.luv2code.bank.atm.app.util;
 import org.luv2code.bank.atm.app.model.Login;
 import org.luv2code.bank.atm.app.model.Registration;
 import org.luv2code.bank.atm.app.service.AuthService;
+import org.luv2code.bank.atm.app.service.TransactionService;
 
 import java.util.Scanner;
 
 public class MenuOption {
     private static Scanner sc = new Scanner(System.in);
     private static AuthService authService = new AuthService();
+    private static TransactionService txService = new TransactionService();
 
-
-
-    public void showMainMenu(){
+    public void showMainMenu() throws Exception {
         boolean isExit = false;
         System.out.println("WELCOME TO MY BANKING APPLICATION");
 
@@ -32,10 +32,35 @@ public class MenuOption {
                     if (!isValidUser) {
                         System.out.println("Account ID or Pin is not valid. Please provide valid credentials.");
                     } else {
-                        showSubMenu();
-                        System.out.println("Please make your transaction choice: ");
-                        int txChoice = sc.nextInt();
-                        System.out.println("You selection choice :"+txChoice);
+                        while(!isExit) {
+                            showSubMenu();
+                            System.out.println("Please make your transaction choice: ");
+                            int txChoice = sc.nextInt();
+                            switch (txChoice) {
+                                case 1:
+                                    txService.getCurrentBalance(accountId);
+                                    break;
+                                case 2:
+                                    System.out.println("Deposit amount");
+                                    break;
+                                case 3:
+                                    System.out.println("Withdraw amount");
+                                    break;
+                                case 4:
+                                    System.out.println("View mini-statement");
+                                    break;
+                                case 5:
+                                    System.out.println("View detailed statement");
+                                    break;
+                                case 6:
+                                    System.out.println("Exiting the system. Thanks for doing business with us!");
+                                    isExit = true;
+                                    break;
+                                default:
+                                    System.out.println("Provide a valid input choice");
+                                    break;
+                            }
+                        }
                     }
                     break;
                 case 2:

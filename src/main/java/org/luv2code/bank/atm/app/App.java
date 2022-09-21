@@ -10,8 +10,7 @@ import java.awt.*;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws Exception {
         MenuOption menuOption = new MenuOption();
         menuOption.showMainMenu();
     }
