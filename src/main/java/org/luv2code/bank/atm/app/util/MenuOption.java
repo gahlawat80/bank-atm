@@ -41,7 +41,9 @@ public class MenuOption {
                                     txService.getCurrentBalance(accountId);
                                     break;
                                 case 2:
-                                    System.out.println("Deposit amount");
+                                    System.out.println("Enter the amount to deposit:");
+                                    double amount = sc.nextDouble();
+                                    txService.depositAmount(amount,accountId);
                                     break;
                                 case 3:
                                     System.out.println("Withdraw amount");
