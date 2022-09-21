@@ -3,6 +3,8 @@ package org.luv2code.bank.atm.app.dao;
 import org.luv2code.bank.atm.app.model.Transaction;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionDaoImpl implements TransactionDao {
     private Connection con;
@@ -58,5 +60,27 @@ public class TransactionDaoImpl implements TransactionDao {
             return tx.getTransactionAmount();
         }
         return 0;
+    }
+
+    @Override
+    public List<Transaction> miniStatements(String accountId) throws Exception {
+        List<Transaction> miniStatementsList =new ArrayList<>();
+        Transaction tx = null;
+        con = createConnection();
+        String sql = "SELECT * FROM tbl_transactions WHERE account_id='"+accountId+"' ORDER BY id desc LIMIT 5";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            tx = new Transaction();
+            tx.setId(rs.getInt("id"));
+            tx.setTransactionId(rs.getString("transaction_id"));
+            tx.setTransactionType(rs.getString("transaction_type"));
+            tx.setTransactionAmount(rs.getDouble("transaction_amount"));
+            tx.setCurrentBalance(rs.getDouble("current_balance"));
+            tx.setTransactionDate(new Date(rs.getDate("transaction_date").getTime()));
+
+            miniStatementsList.add(tx);
+        }
+        return miniStatementsList;
     }
 }

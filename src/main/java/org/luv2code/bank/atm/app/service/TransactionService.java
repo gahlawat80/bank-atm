@@ -5,6 +5,7 @@ import org.luv2code.bank.atm.app.dao.TransactionDaoImpl;
 import org.luv2code.bank.atm.app.model.Transaction;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class TransactionService {
@@ -51,6 +52,15 @@ public class TransactionService {
             }
         } else {
             System.out.println("Withdrwal of amount :" + amount + " from account: " + accountId + " is NOT possible as current balance: " + currentBalance + " is less than amount to be withdrawn");
+        }
+    }
+
+    public void showMiniStatements(String accountId){
+        try {
+            List<Transaction> miniStatements = transactionDao.miniStatements(accountId);
+            miniStatements.stream().forEach(statement -> System.out.println(statement));
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 }

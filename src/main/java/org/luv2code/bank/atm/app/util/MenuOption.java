@@ -59,7 +59,7 @@ public class MenuOption {
                                     }
                                     break;
                                 case 4:
-                                    System.out.println("View mini-statement");
+                                    txService.showMiniStatements(accountId);
                                     break;
                                 case 5:
                                     System.out.println("View detailed statement");
