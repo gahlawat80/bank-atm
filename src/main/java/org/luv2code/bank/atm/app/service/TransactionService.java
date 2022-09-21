@@ -32,4 +32,25 @@ public class TransactionService {
             System.out.println("Deposit transaction of amount: "+amount+" is NOT created for account: "+accountId+". Please try again later!");
         }
     }
+
+    public void withdrawMoney(double amount,String accountId) throws Exception {
+        Transaction tx = new Transaction();
+        tx.setTransactionId(UUID.randomUUID().toString());
+        tx.setTransactionType("WITHDRAW");
+        tx.setTransactionAmount(amount);
+        double currentBalance = transactionDao.viewCurrentBalance(accountId);
+        tx.setCurrentBalance(currentBalance - amount);
+        tx.setTransactionDate(new java.sql.Date(new Date().getTime()));
+
+        if((currentBalance - amount)>=0){
+            double withdrawAmount = transactionDao.withdrawTransaction(tx,accountId);
+            if(withdrawAmount>0){
+                System.out.println("Withdrwal of amount :"+amount+" from account: "+accountId+" is successful!");
+            }else {
+                System.out.println("Withdrwal of amount :"+amount+" from account: "+accountId+" is NOT successful!");
+            }
+        } else {
+            System.out.println("Withdrwal of amount :" + amount + " from account: " + accountId + " is NOT possible as current balance: " + currentBalance + " is less than amount to be withdrawn");
+        }
+    }
 }
