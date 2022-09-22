@@ -63,4 +63,13 @@ public class TransactionService {
             e.printStackTrace();
         }
     }
+
+    public void showDetailedStatements(String accountId, Date startDate, Date endDate){
+        try{
+            List<Transaction> detailedStatements = transactionDao.getDetailedStatements(accountId,startDate,endDate);
+            detailedStatements.stream().forEach(statement -> System.out.println(statement));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

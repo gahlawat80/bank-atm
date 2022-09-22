@@ -83,4 +83,30 @@ public class TransactionDaoImpl implements TransactionDao {
         }
         return miniStatementsList;
     }
+
+    @Override
+    public List<Transaction> getDetailedStatements(String accountId, java.util.Date startDate, java.util.Date endDate) throws Exception {
+        List<Transaction> detailedTransactionList = new ArrayList<>();
+
+        Transaction tx = null;
+
+        con = createConnection();
+
+        String query = "SELECT * FROM tbl_transactions WHERE account_id='"+accountId+"' AND transaction_date>='"+new Date(startDate.getTime())+"' AND transaction_date<='"+new Date(endDate.getTime())+"'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            tx = new Transaction();
+            tx.setId(rs.getInt("id"));
+            tx.setTransactionId(rs.getString("transaction_id"));
+            tx.setTransactionType(rs.getString("transaction_type"));
+            tx.setTransactionAmount(rs.getDouble("transaction_amount"));
+            tx.setCurrentBalance(rs.getDouble("current_balance"));
+            tx.setTransactionDate(new Date(rs.getDate("transaction_date").getTime()));
+
+            detailedTransactionList.add(tx);
+        }
+        return detailedTransactionList;
+    }
 }
