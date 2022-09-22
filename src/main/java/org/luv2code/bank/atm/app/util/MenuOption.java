@@ -5,6 +5,7 @@ import org.luv2code.bank.atm.app.model.Registration;
 import org.luv2code.bank.atm.app.service.AuthService;
 import org.luv2code.bank.atm.app.service.TransactionService;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class MenuOption {
@@ -62,7 +63,11 @@ public class MenuOption {
                                     txService.showMiniStatements(accountId);
                                     break;
                                 case 5:
-                                    System.out.println("View detailed statement");
+                                    System.out.println("Enter the transaction begin date (mm/dd/yyyy):");
+                                    Date startDate = new Date(sc.next());
+                                    System.out.println("Enter the transaction end date (mm/dd/yyyy):");
+                                    Date endDate = new Date(sc.next());
+                                    txService.showDetailedStatements(accountId,startDate,endDate);
                                     break;
                                 case 6:
                                     System.out.println("Exiting the system. Thanks for doing business with us!");
